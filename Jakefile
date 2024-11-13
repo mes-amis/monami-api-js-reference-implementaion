@@ -59,7 +59,13 @@ namespace('api', () => {
   namespace('screenings', () => {
     desc('List completed screening requests');
     task('list', async () => {
-      console.log('Running api:screenings:list task');
+      await axios.get(`${baseURL}/assessments/requests`, {
+        auth: auth
+      }).then((response) => {
+        console.log(JSON.stringify(response.data, null, 2));
+      }).catch((error) => {
+        console.error('Error:', error);
+      });
     });
 
     desc('Create a new screening request');
