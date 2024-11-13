@@ -17,15 +17,24 @@ namespace('api', () => {
           password: process.env.MONAMI_SECRET
         }
       }).then((response) => {
-        console.log(response.data);
+        console.log(JSON.stringify(response.data, null, 2));
       }).catch((error) => {
         console.error('Error:', error);
       });
     });
 
     desc('Find an existing client');
-    task('find', async () => {
-      console.log('Running api:clients:find task');
+    task('find', async (id) => {
+      await axios.get(`${baseURL}/clients/${id}`, {
+        auth: {
+          username: process.env.MONAMI_UID,
+          password: process.env.MONAMI_SECRET
+        }
+      }).then((response) => {
+        console.log(JSON.stringify(response.data, null, 2));
+      }).catch((error) => {
+        console.error('Error:', error);
+      });
     });
 
     desc('Create a new client');
