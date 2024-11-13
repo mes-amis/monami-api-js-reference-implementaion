@@ -7,15 +7,17 @@ task('default', jake.showAllTaskDescriptions);
 
 const baseURL = 'http://app.monami.test/api';
 
+const auth = {
+  username: process.env.MONAMI_UID,
+  password: process.env.MONAMI_SECRET
+}
+
 namespace('api', () => {
   namespace('clients', () => {
     desc('List a existing clients');
     task('list', async () => {
       await axios.get(`${baseURL}/clients`, {
-        auth: {
-          username: process.env.MONAMI_UID,
-          password: process.env.MONAMI_SECRET
-        }
+        auth: auth
       }).then((response) => {
         console.log(JSON.stringify(response.data, null, 2));
       }).catch((error) => {
@@ -26,20 +28,31 @@ namespace('api', () => {
     desc('Find an existing client');
     task('find', async (id) => {
       await axios.get(`${baseURL}/clients/${id}`, {
-        auth: {
-          username: process.env.MONAMI_UID,
-          password: process.env.MONAMI_SECRET
-        }
+        auth: auth
       }).then((response) => {
         console.log(JSON.stringify(response.data, null, 2));
       }).catch((error) => {
-        console.error('Error:', error);
+        console.error('Error:', error.body);
       });
     });
 
     desc('Create a new client');
     task('create', async () => {
-      console.log('Running api:clients:create task');
+      await axios.post(`${baseURL}/clients`, {
+        person: {
+          first_name: 'Robert',
+          last_name: 'Smith',
+        },
+        address: {
+          county: 'Essex',
+        }
+      }, {
+        auth: auth
+      }).then((response) => {
+        console.log(JSON.stringify(response.data, null, 2));
+      }).catch((error) => {
+        console.error('Error:', error);
+      });
     });
   })
 
