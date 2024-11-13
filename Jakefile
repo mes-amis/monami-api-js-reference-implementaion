@@ -90,10 +90,10 @@ namespace('api', () => {
 
   namespace('webhooks', () => {
     desc('Create a new webhook');
-    task('create', async () => {
+    task('create', async (webhook_host = 'http://monami.test:3000') => {
       await axios.post(`${baseURL}/webhooks`, {
         topic: 'assessments.request.completed',
-        webhook_url: 'http://monami.test:3000/webhooks'
+        webhook_url: `${webhook_host}/webhooks`
       }, {
         auth: auth
       }).then((response) => {
