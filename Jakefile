@@ -83,8 +83,14 @@ namespace('api', () => {
     });
 
     desc('Get a screening request by id');
-    task('show', async () => {
-      console.log('Running api:screenings:show task');
+    task('show', async (request_id) => {
+      await axios.get(`${baseURL}/assessments/requests/${request_id}`, {
+        auth: auth
+      }).then((response) => {
+        console.log(JSON.stringify(response.data, null, 2));
+      }).catch((error) => {
+        console.error('Error:', error);
+      });
     });
   })
 
