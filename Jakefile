@@ -69,8 +69,17 @@ namespace('api', () => {
     });
 
     desc('Create a new screening request');
-    task('create', async () => {
-      console.log('Running api:screenings:create task');
+    task('create', async (client_id) => {
+      await axios.post(`${baseURL}/assessments/requests`, {
+        client_id: client_id,
+        document_name: 'Screen for Consumer Services v1'
+      }, {
+        auth: auth
+      }).then((response) => {
+        console.log(JSON.stringify(response.data, null, 2));
+      }).catch((error) => {
+        console.error('Error:', error);
+      });
     });
 
     desc('Get a screening request by id');
