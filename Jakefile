@@ -12,6 +12,12 @@ const auth = {
   password: process.env.MONAMI_SECRET
 }
 
+const printErrorStatusAndBody = (error) => {
+  console.error('Error status:', error.response.status);
+  console.error(JSON.stringify(error.response.data, null, 2));
+}
+
+
 namespace('api', () => {
   namespace('clients', () => {
     desc('List a existing clients');
@@ -20,9 +26,7 @@ namespace('api', () => {
         auth: auth
       }).then((response) => {
         console.log(JSON.stringify(response.data, null, 2));
-      }).catch((error) => {
-        console.error('Error:', error);
-      });
+      }).catch(printErrorStatusAndBody);
     });
 
     desc('Find an existing client');
@@ -31,9 +35,7 @@ namespace('api', () => {
         auth: auth
       }).then((response) => {
         console.log(JSON.stringify(response.data, null, 2));
-      }).catch((error) => {
-        console.error('Error:', error.body);
-      });
+      }).catch(printErrorStatusAndBody);
     });
 
     desc('Create a new client');
@@ -50,9 +52,7 @@ namespace('api', () => {
         auth: auth
       }).then((response) => {
         console.log(JSON.stringify(response.data, null, 2));
-      }).catch((error) => {
-        console.error('Error:', error);
-      });
+      }).catch(printErrorStatusAndBody);
     });
   })
 
@@ -63,9 +63,7 @@ namespace('api', () => {
         auth: auth
       }).then((response) => {
         console.log(JSON.stringify(response.data, null, 2));
-      }).catch((error) => {
-        console.error('Error:', error);
-      });
+      }).catch(printErrorStatusAndBody);
     });
 
     desc('Create a new screening request');
@@ -77,9 +75,7 @@ namespace('api', () => {
         auth: auth
       }).then((response) => {
         console.log(JSON.stringify(response.data, null, 2));
-      }).catch((error) => {
-        console.error('Error:', error);
-      });
+      }).catch(printErrorStatusAndBody);
     });
 
     desc('Get a screening request by id');
@@ -88,16 +84,21 @@ namespace('api', () => {
         auth: auth
       }).then((response) => {
         console.log(JSON.stringify(response.data, null, 2));
-      }).catch((error) => {
-        console.error('Error:', error);
-      });
+      }).catch(printErrorStatusAndBody);
     });
   })
 
   namespace('webhooks', () => {
     desc('Create a new webhook');
     task('create', async () => {
-      console.log('Running api:webhooks:create task');
+      await axios.post(`${baseURL}/webhooks`, {
+        topic: 'assessments.request.completed',
+        webhook_url: 'http://monami.test:3000/webhooks'
+      }, {
+        auth: auth
+      }).then((response) => {
+        console.log(JSON.stringify(response.data, null, 2));
+      }).catch(printErrorStatusAndBody);
     });
   })
 })
