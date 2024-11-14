@@ -5,7 +5,8 @@ const axios = require('axios');
 
 task('default', jake.showAllTaskDescriptions);
 
-const baseURL = 'http://app.monami.test/api';
+// const baseURL = 'http://app.monami.test/api';
+const baseURL = 'https://app.demo.monami.io/api';
 
 const auth = {
   username: process.env.MONAMI_UID,
@@ -38,7 +39,7 @@ namespace('api', () => {
       }).catch(printErrorStatusAndBody);
     });
 
-    desc('Create a new client');
+    desc('Create a new client: try Morris or Burlington as county names');
     task('create', async () => {
       await axios.post(`${baseURL}/clients`, {
         person: {
@@ -46,7 +47,7 @@ namespace('api', () => {
           last_name: 'Smith',
         },
         address: {
-          county: 'Essex',
+          county: 'Burlington',
         }
       }, {
         auth: auth
