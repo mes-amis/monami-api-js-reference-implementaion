@@ -20,7 +20,7 @@ const printErrorStatusAndBody = (error) => {
 
 namespace('api', () => {
   namespace('clients', () => {
-    desc('List a existing clients');
+    desc('List existing clients');
     task('list', async () => {
       await axios.get(`${baseURL}/clients`, {
         auth: auth
