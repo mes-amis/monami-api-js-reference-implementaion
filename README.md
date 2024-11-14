@@ -17,14 +17,14 @@ $ npm install               # installs dependencies.
 ## Basic Usage
 
 ```
-$ npx jake                                   # Print example operations.
-$ npx jake api:clients:list                  # List a existing clients
-$ npx jake api:clients:find[client_id]       # Find an existing client; client_id is a monami client label such as ami-684b6609
-$ npx jake api:clients:create                # Create a new client
-$ npx jake api:screenings:list               # List completed screening requests
-$ npx jake api:screenings:create[client_id]  # Create a new screening request
-$ npx jake api:screenings:show[request_id]   # Get a screening request by id
-$ npx jake api:webhooks:create[webhook_host] # Create a new webhook subscription
+$ npx jake                                     # Print example operations.
+$ npx jake 'api:clients:list'                  # List a existing clients
+$ npx jake 'api:clients:find[client_id]'       # Find an existing client; client_id is a monami client label such as ami-684b6609
+$ npx jake 'api:clients:create'                # Create a new client
+$ npx jake 'api:screenings:list'               # List completed screening requests
+$ npx jake 'api:screenings:create[client_id]'  # Create a new screening request
+$ npx jake 'api:screenings:show[request_id]'   # Get a screening request by id
+$ npx jake 'api:webhooks:create[webhook_host]' # Create a new webhook subscription
 ```
 
 ## To receive Webhooks
