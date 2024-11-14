@@ -3,10 +3,9 @@ require('dotenv').config()
 let { namespace, task, desc } = require('jake');
 const axios = require('axios');
 
-task('default', jake.showAllTaskDescriptions);
+var baseURL = 'https://app.demo.monami.io/api'
 
-// const baseURL = 'http://app.monami.test/api';
-const baseURL = 'https://app.demo.monami.io/api';
+task('default', jake.showAllTaskDescriptions);
 
 const auth = {
   username: process.env.MONAMI_UID,
@@ -17,6 +16,10 @@ const printErrorStatusAndBody = (error) => {
   console.error('Error status:', error.response.status);
   console.error(JSON.stringify(error.response.data, null, 2));
 }
+
+task('dev', () => {
+  baseURL = 'http://app.monami.test/api'
+})
 
 
 namespace('api', () => {
@@ -71,7 +74,8 @@ namespace('api', () => {
     task('create', async (client_id) => {
       await axios.post(`${baseURL}/assessments/requests`, {
         client_id: client_id,
-        document_name: 'Screen for Consumer Services v1'
+        document_name: 'Screen for Consumer Services v1',
+        demo_mode: true
       }, {
         auth: auth
       }).then((response) => {
