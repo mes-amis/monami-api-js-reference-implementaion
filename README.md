@@ -1,6 +1,6 @@
 # Mon Ami API Reference Implementation
 
-Exmaples of using the [Mon Ami API](https://docs.monami.io/#introduction)
+Examples of using the [Mon Ami API](https://docs.monami.io/#introduction)
 
 ## Getting Started
 
