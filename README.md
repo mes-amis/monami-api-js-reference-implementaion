@@ -27,6 +27,8 @@ $ jake api:webhooks:create[webhook_host] # Create a new webhook subscription
 
 ## To receive Webhooks
 
-- Start an ngrok tunnel `ngrok http http://localhost:3000`
-- Register a webhook subscription `npx jake "api:webhooks:create[https://ADDRESS_ASSIGNED_BY_NGROK.ngrok-free.app]"`
-- Start the webhook server `node index.js`
+```
+$ ngrok http http://localhost:3000                           # Start an ngrok tunnel
+$ npx jake "api:webhooks:create[ADDRESS_ASSIGNED_BY_NGROK]"  # Register a webhook subscription
+$ node index.js                                              # Start the webhook server
+```
