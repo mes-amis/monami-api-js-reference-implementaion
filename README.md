@@ -1,5 +1,7 @@
 # Mon Ami API Reference Implementation
 
+Exmaples of using the [Mon Ami API](https://docs.monami.io/#introduction)
+
 ## Getting Started
 
 - Install [Node.js](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
