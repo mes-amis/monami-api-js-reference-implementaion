@@ -3,13 +3,13 @@ require('dotenv').config()
 let { namespace, task, desc } = require('jake');
 const axios = require('axios');
 
-var baseURL = 'https://app.demo.monami.io/api'
+let baseURL = 'https://app.demo.monami.io/api'
 
 task('default', jake.showAllTaskDescriptions);
 
-const auth = {
-  username: process.env.MONAMI_UID,
-  password: process.env.MONAMI_SECRET
+let auth = {
+  username: process.env.DEMO_MONAMI_UID,
+  password: process.env.DEMO_MONAMI_SECRET
 }
 
 const printErrorStatusAndBody = (error) => {
@@ -19,6 +19,11 @@ const printErrorStatusAndBody = (error) => {
 
 task('dev', () => {
   baseURL = 'http://app.monami.test/api'
+
+  auth = {
+    username: process.env.MONAMI_UID,
+    password: process.env.MONAMI_SECRET
+  }
 })
 
 
