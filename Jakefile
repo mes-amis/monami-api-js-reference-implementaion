@@ -110,5 +110,14 @@ namespace('api', () => {
         console.log(JSON.stringify(response.data, null, 2));
       }).catch(printErrorStatusAndBody);
     });
+
+    desc('Destroy a new webhook subscription');
+    task('destroy', async (id) => {
+      await axios.delete(`${baseURL}/webhooks/${id}`, {
+        auth: auth
+      }).then((response) => {
+        console.log(JSON.stringify(response.data, null, 2));
+      }).catch(printErrorStatusAndBody);
+    });
   })
 })
