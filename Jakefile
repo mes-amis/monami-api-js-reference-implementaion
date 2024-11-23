@@ -38,6 +38,26 @@ namespace('api', () => {
       }).catch(printErrorStatusAndBody);
     });
 
+    desc('Search for existing clients');
+    task('search', async () => {
+      // Search parameters are nested under the 'q' key. Ex: (q[first_name], q[last_name])
+      const queryString = new URLSearchParams({
+        "q[first_name]": 'Werner',
+        "q[last_name]": 'Schaefer',
+        "q[status]": 'pending',
+        "q[phone_number]": '(541) 516 - 4741',
+        "q[date_of_birth]": 'November 13, 1959',
+        "q[address_county]": 'San Mateo',
+        "q[social_security_number_last_4]": '6893'
+      }).toString();
+
+      await axios.get(`${baseURL}/clients?${queryString}`, {
+        auth: auth
+      }).then((response) => {
+        console.log(JSON.stringify(response.data, null, 2));
+      }).catch(printErrorStatusAndBody);
+    });
+
     desc('Find an existing client');
     task('find', async (id) => {
       await axios.get(`${baseURL}/clients/${id}`, {
