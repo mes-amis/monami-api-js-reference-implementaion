@@ -12,6 +12,11 @@ let auth = {
   password: process.env.DEMO_MONAMI_SECRET
 }
 
+const printStatusAndBody = (response) => {
+  console.log("Status: ", response.status)
+  console.log(JSON.stringify(response.data, null, 2));
+}
+
 const printErrorStatusAndBody = (error) => {
   console.error('Error status:', error.response.status);
   console.error(JSON.stringify(error.response.data, null, 2));
@@ -33,18 +38,49 @@ namespace('api', () => {
     task('list', async () => {
       await axios.get(`${baseURL}/clients`, {
         auth: auth
-      }).then((response) => {
-        console.log(JSON.stringify(response.data, null, 2));
-      }).catch(printErrorStatusAndBody);
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
+    });
+
+    desc('Search for existing clients');
+    task('search', async () => {
+      // Search parameters are nested under the 'q' key. Ex: (q[first_name], q[last_name])
+      const queryString = new URLSearchParams({
+        "q[first_name]": 'Werner',
+        "q[last_name]": 'Schaefer',
+        "q[status]": 'pending',
+        "q[phone_number]": '(541) 516 - 4741',
+        "q[date_of_birth]": 'November 13, 1959',
+        "q[address_county]": 'San Mateo',
+        "q[social_security_number_last_4]": '6893'
+      }).toString();
+
+      await axios.get(`${baseURL}/clients?${queryString}`, {
+        auth: auth
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
+    });
+
+    desc('Create a new client but find a duplicate');
+    task('create_with_duplicate', async () => {
+      await axios.post(`${baseURL}/clients`, {
+        person: {
+          first_name: 'Werner',
+          last_name: 'Schaefer',
+          date_of_birth: '1959-11-13',
+          primary_phone_number: '5415164741',
+        },
+        address: {
+          county: 'San Mateo',
+        },
+      }, {
+        auth: auth
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
     });
 
     desc('Find an existing client');
     task('find', async (id) => {
       await axios.get(`${baseURL}/clients/${id}`, {
         auth: auth
-      }).then((response) => {
-        console.log(JSON.stringify(response.data, null, 2));
-      }).catch(printErrorStatusAndBody);
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
     });
 
     desc('Create a new client: try Morris or Burlington as county names');
@@ -59,9 +95,7 @@ namespace('api', () => {
         }
       }, {
         auth: auth
-      }).then((response) => {
-        console.log(JSON.stringify(response.data, null, 2));
-      }).catch(printErrorStatusAndBody);
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
     });
   })
 
@@ -70,9 +104,7 @@ namespace('api', () => {
     task('list', async () => {
       await axios.get(`${baseURL}/assessments/requests`, {
         auth: auth
-      }).then((response) => {
-        console.log(JSON.stringify(response.data, null, 2));
-      }).catch(printErrorStatusAndBody);
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
     });
 
     desc('Create a new screening request');
@@ -83,18 +115,14 @@ namespace('api', () => {
         demo_mode: true
       }, {
         auth: auth
-      }).then((response) => {
-        console.log(JSON.stringify(response.data, null, 2));
-      }).catch(printErrorStatusAndBody);
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
     });
 
     desc('Get a screening request by id');
     task('show', async (request_id) => {
       await axios.get(`${baseURL}/assessments/requests/${request_id}`, {
         auth: auth
-      }).then((response) => {
-        console.log(JSON.stringify(response.data, null, 2));
-      }).catch(printErrorStatusAndBody);
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
     });
   })
 
@@ -106,9 +134,14 @@ namespace('api', () => {
         webhook_url: `${webhook_host}/webhooks`
       }, {
         auth: auth
-      }).then((response) => {
-        console.log(JSON.stringify(response.data, null, 2));
-      }).catch(printErrorStatusAndBody);
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
+    });
+
+    desc('Destroy a new webhook subscription');
+    task('destroy', async (id) => {
+      await axios.delete(`${baseURL}/webhooks/${id}`, {
+        auth: auth
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
     });
   })
 })
