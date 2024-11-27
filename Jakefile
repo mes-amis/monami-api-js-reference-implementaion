@@ -126,6 +126,15 @@ namespace('api', () => {
     });
   })
 
+  namespace('documents', () => {
+    desc('List completed documents with template label of screen-for-consumer-services-v1 completed since 2022-10-01');
+    task('list', async (id) => {
+      await axios.get(`${baseURL}/clients/${id}/documents?q[label]=screen-for-consumer-services-v1&q[completed_at_gt]=2022-10-01`, {
+        auth: auth
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
+    });
+  })
+
   namespace('webhooks', () => {
     desc('Create a new webhook subscription');
     task('create', async (webhook_host) => {
