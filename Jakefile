@@ -129,7 +129,19 @@ namespace('api', () => {
   namespace('documents', () => {
     desc('List completed documents with template label of screen-for-consumer-services-v1 completed since 2022-10-01');
     task('list', async (id) => {
-      await axios.get(`${baseURL}/clients/${id}/documents?q[label]=screen-for-consumer-services-v1&q[completed_at_gt]=2022-10-01`, {
+      const queryString = new URLSearchParams({
+        "q[label]": 'screen-for-consumer-services-v1',
+        "q[completed_at_gt]": '2022-10-01',
+      }).toString();
+
+      await axios.get(`${baseURL}/clients/${id}/documents?${queryString}`, {
+        auth: auth
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
+    });
+
+    desc('Show a completed document with completed values');
+    task('show', async (client_id, document_id) => {
+      await axios.get(`${baseURL}/clients/${client_id}/documents/${document_id}`, {
         auth: auth
       }).then(printStatusAndBody).catch(printErrorStatusAndBody);
     });
