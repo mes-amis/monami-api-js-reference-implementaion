@@ -111,7 +111,7 @@ namespace('api', () => {
     task('create', async (client_id) => {
       await axios.post(`${baseURL}/assessments/requests`, {
         client_id: client_id,
-        document_name: 'Screen for Consumer Services v1',
+        document_label: 'sf-101-screen-for-consumer-services-v1',
         demo_mode: true
       }, {
         auth: auth
@@ -121,6 +121,16 @@ namespace('api', () => {
     desc('Get a screening request by id');
     task('show', async (request_id) => {
       await axios.get(`${baseURL}/assessments/requests/${request_id}`, {
+        auth: auth
+      }).then(printStatusAndBody).catch(printErrorStatusAndBody);
+    });
+
+    desc('Get avaialble templates for screening requests');
+    task('templates', async () => {
+      const queryString = new URLSearchParams({
+        "q[label_eq]": 'sf-101-screen-for-consumer-services-v1',
+      })
+      await axios.get(`${baseURL}/assessments/templates?${queryString}`, {
         auth: auth
       }).then(printStatusAndBody).catch(printErrorStatusAndBody);
     });
