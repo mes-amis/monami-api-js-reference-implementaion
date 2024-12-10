@@ -2,7 +2,7 @@
 
 Examples of using the [Mon Ami API](https://docs.monami.io/#introduction)
 
-## Getting Started
+## Getting Started (command line example)
 
 - Install [Node.js](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
 - Install [Ngrok](https://ngrok.com/docs/getting-started/)
@@ -34,3 +34,9 @@ $ ngrok http http://localhost:3000                           # Start an ngrok tu
 $ npx jake "api:webhooks:create[ADDRESS_ASSIGNED_BY_NGROK]"  # Register a webhook subscription
 $ node index.js                                              # Start the webhook server
 ```
+
+## Getting Started (AWS Lambda Example)
+
+We also provide an AWS lambda reference implementation in the lamdba_example/ directory.
+There is a JavaScript Lambda function that you can deploy in your AWS account and also a
+sample test event that to use as a starting point to test the lambda in your AWS account.
