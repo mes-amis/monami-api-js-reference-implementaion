@@ -125,7 +125,7 @@ namespace('api', () => {
       }).then(printStatusAndBody).catch(printErrorStatusAndBody);
     });
 
-    desc('Get avaialble templates for screening requests');
+    desc('Get available templates for screening requests');
     task('templates', async () => {
       const queryString = new URLSearchParams({
         "q[label_eq]": 'sf-101-screen-for-consumer-services-v1',
