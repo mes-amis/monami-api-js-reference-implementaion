@@ -68,7 +68,7 @@ namespace('api', () => {
           date_of_birth: '1959-11-13',
           phone_numbers: [
               {
-                  number: '5415164741',
+                  number: '+15415164741',
                   primary: true
               }
           ],
