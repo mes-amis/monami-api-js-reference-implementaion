@@ -58,8 +58,13 @@ async function createClient(data) {
       first_name: data.first_name,
       last_name: data.last_name,
       date_of_birth: data.date_of_birth,
-      primary_phone_number: data.primary_phone_number,
-      social_security_number: data.social_security_number
+      social_security_number: data.social_security_number,
+      phone_numbers: [
+        {
+          number: data.primary_phone_number,
+          primary: true
+        }
+      ]
     },
     address: {
       county: data.county
@@ -80,7 +85,7 @@ async function findClient(data) {
     'q[first_name]': data.first_name,
     'q[last_name]': data.last_name,
     'q[date_of_birth]': data.date_of_birth,
-    'q[primary_phone_number]': data.primary_phone_number,
+    'q[phone_number]': data.primary_phone_number, // any phone number must match
     'q[social_security_number_last_4]': ssn_last_4
   }
 

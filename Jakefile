@@ -66,7 +66,12 @@ namespace('api', () => {
           first_name: 'Werner',
           last_name: 'Schaefer',
           date_of_birth: '1959-11-13',
-          primary_phone_number: '5415164741',
+          phone_numbers: [
+              {
+                  number: '+15415164741',
+                  primary: true
+              }
+          ],
         },
         address: {
           county: 'San Mateo',
