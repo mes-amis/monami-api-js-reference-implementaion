@@ -116,7 +116,7 @@ namespace('api', () => {
     task('create', async (client_id) => {
       await axios.post(`${baseURL}/assessments/requests`, {
         client_id: client_id,
-        document_label: 'sf-101-screen-for-consumer-services-v1',
+        document_label: 'screen-for-community-services',
         demo_mode: true
       }, {
         auth: auth
@@ -133,7 +133,7 @@ namespace('api', () => {
     desc('Get available templates for screening requests');
     task('templates', async () => {
       const queryString = new URLSearchParams({
-        "q[label_eq]": 'sf-101-screen-for-consumer-services-v1',
+        "q[label_eq]": 'screen-for-community-services',
       })
       await axios.get(`${baseURL}/assessments/templates?${queryString}`, {
         auth: auth
@@ -142,10 +142,10 @@ namespace('api', () => {
   })
 
   namespace('documents', () => {
-    desc('List completed documents with template label of screen-for-consumer-services-v1 completed since 2022-10-01');
+    desc('List completed documents with template label of screen-for-community-services completed since 2022-10-01');
     task('list', async (id) => {
       const queryString = new URLSearchParams({
-        "q[label]": 'screen-for-consumer-services-v1',
+        "q[label]": 'screen-for-community-services',
         "q[completed_at_gt]": '2022-10-01',
       }).toString();
 
