@@ -5,7 +5,7 @@ import * as querystring from 'querystring'
 const UID = "YOUR_API_UID_HERE"
 const SECRET = "YOUR_API_SECRET_HERE"
 const API_BASE_URL = "https://app.demo.monami.io/api/"  // switch to app.monami.io to move to production
-const DOCUMENT_TEMPLATE = "Screen for Consumer Services v1"
+const DOCUMENT_LABEL = "screen-for-community-services"
 
 export const handler = async (event, context, callback) => {
   try {
@@ -20,7 +20,7 @@ export const handler = async (event, context, callback) => {
     }
 
     const client = await findOrCreateClient(sanitizedClientData)
-    const assessmentRequest = await createAssessmentRequest(client, DOCUMENT_TEMPLATE)
+    const assessmentRequest = await createAssessmentRequest(client, DOCUMENT_LABEL)
 
     callback(null, { statusCode: 200, body: assessmentRequest })
   } catch (error) {
@@ -100,7 +100,7 @@ async function findClient(data) {
 async function createAssessmentRequest(client, name) {
   const params = {
     client_id: client.label,
-    document_name: name
+    document_label: name
   }
 
   const response = await post('assessments/requests', params)
